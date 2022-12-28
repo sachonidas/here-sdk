@@ -88,18 +88,18 @@ class AppLogic {
 
     var destinationWaypoint = HERE.Waypoint.withDefaults(_createRandomGeoCoordinatesAroundMapCenter());
 
-    _routeCalculator.calculateCarRoute(startWaypoint, destinationWaypoint,
-        (HERE.RoutingError? routingError, List<HERE.Route>? routeList) async {
-      if (routingError == null) {
-        // When error is null, it is guaranteed that the routeList is not empty.
-        HERE.Route _calculatedRoute = routeList!.first;
-        _showRouteOnMap(_calculatedRoute);
-        _startNavigationOnRoute(isSimulated, _calculatedRoute);
-      } else {
-        final error = routingError.toString();
-        _updateMessageState("Error while calculating a route: $error");
-      }
-    });
+    _routeCalculator.calculateTruckRoute(startWaypoint, destinationWaypoint,
+            (HERE.RoutingError? routingError, List<HERE.Route>? routeList) async {
+          if (routingError == null) {
+            // When error is null, it is guaranteed that the routeList is not empty.
+            HERE.Route _calculatedRoute = routeList!.first;
+            _showRouteOnMap(_calculatedRoute);
+            _startNavigationOnRoute(isSimulated, _calculatedRoute);
+          } else {
+            final error = routingError.toString();
+            _updateMessageState("Error while calculating a route: $error");
+          }
+        });
   }
 
   void _startNavigationOnRoute(bool isSimulated, HERE.Route route) {
@@ -137,7 +137,8 @@ class AppLogic {
     GeoCoordinates centerGeoCoordinates = _hereMapController.camera.state.targetCoordinates;
     double lat = centerGeoCoordinates.latitude;
     double lon = centerGeoCoordinates.longitude;
-    return GeoCoordinates(_getRandom(lat - 0.02, lat + 0.02), _getRandom(lon - 0.02, lon + 0.02));
+    return GeoCoordinates(42.50466,-2.4356);
+    // return GeoCoordinates(_getRandom(lat - 0.02, lat + 0.02), _getRandom(lon - 0.02, lon + 0.02));
   }
 
   double _getRandom(double min, double max) {

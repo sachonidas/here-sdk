@@ -43,4 +43,16 @@ class RouteCalculator {
 
     _routingEngine.calculateCarRoute(waypoints, routingOptions, calculateRouteCallback);
   }
+
+  void calculateTruckRoute(
+      Waypoint startWaypoint, Waypoint destinationWaypoint, CalculateRouteCallback calculateRouteCallback) {
+    List<Waypoint> waypoints = [startWaypoint, destinationWaypoint];
+
+    // A route handle is required for the DynamicRoutingEngine to get updates on traffic-optimized routes.
+    var routingOptions = HERE.TruckOptions();
+    routingOptions.routeOptions.enableRouteHandle = true;
+
+    _routingEngine.calculateTruckRoute(waypoints, routingOptions, calculateRouteCallback);
+  }
+
 }
